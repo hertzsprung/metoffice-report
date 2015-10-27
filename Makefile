@@ -21,4 +21,5 @@ include $(MAKE_COMMON)/templates/Makefile-FileSystem
 include $(MAKE_COMMON)/templates/Makefile-LaTeX
 include $(MAKE_COMMON)/templates/Makefile-Gnuplot
 include make/Makefile-Resting
+include make/Makefile-GravityWaves
 include make/Makefile-MetOffice-Report
