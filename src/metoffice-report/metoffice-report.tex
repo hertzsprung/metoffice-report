@@ -45,7 +45,7 @@ We have performed a series of two-dimensional tests using a single nonhydrostati
 \begin{itemize}
 \item is designed in OpenFOAM CFD for unstructured grids
 \item uses an upwind-biased, explicit advection scheme
-\item has $\theta$, the Exner function of pressure, and covariant velocities as prognostic variables
+\item has potential temperature, the Exner function of pressure, and covariant velocities as prognostic variables
 \item has a C grid horizontal staggering
 \item uses a Lorenz staggering in the vertical
 \end{itemize}
@@ -75,7 +75,7 @@ Figure~\ref{fig:resting} shows the maximum spurious vertical velocities induced 
 
 \begin{figure}
 	\centering
-	%\includegraphics[width=\linewidth]{fig-gravityWaves-theta.pdf}
+	\includegraphics[width=\linewidth]{fig-gravityWaves-theta.pdf}
 	\caption{Differences in potential temperature between the start and end of the gravity waves test on the terrain following grid with $\Delta z = \SI{50}{\meter}$.  The dashed line at $x = \SI{50}{\kilo\meter}$ marks the position of the vertical profile in figure~\ref{fig:gw-sampleLine}.  Axes are in units of \si{\meter}.}
 	\label{fig:gw-theta}
 \end{figure}
