@@ -1,0 +1,5 @@
+build
+metoffice-report.pdf
+*.swp
+*#
+*~

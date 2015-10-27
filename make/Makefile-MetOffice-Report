@@ -1,0 +1,6 @@
+$(eval $(call LaTeXWithBibTeX,src/metoffice-report,build,metoffice-report))
+
+build/metoffice-report/metoffice-report.pdf: \
+  src/metoffice-report/ametsoc2014.bst \
+  src/metoffice-report/references.bib \
+  build/resting-diagnostics/w.tex

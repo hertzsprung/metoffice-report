@@ -1,0 +1,93 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{csquotes}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage[bitstream-charter]{mathdesign}
+\usepackage{natbib}
+\usepackage[final,babel]{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{siunitx}
+\usepackage[margin=3pt]{subcaption}
+\usepackage{xcolor}
+\PassOptionsToPackage{final}{graphicx}
+
+\newcommand{\TODO}[1]{\textcolor{purple}{TODO: \emph{#1}}}
+
+\title{Numerical representation of mountains in atmospheric models}
+\author{James Shaw}
+
+\makeatletter
+\AtBeginDocument{
+  \hypersetup{
+    pdftitle = {\@title},
+    pdfauthor = {\@author}
+  }
+}
+\makeatother
+
+\begin{document}
+
+\maketitle
+
+I am reaching the end of the first year of my PhD, supervised by Hilary Weller, John Methven and Terry Davies.  The project, `Numerical representation of mountains in atmospheric models', is a continuation of my MSc dissertation, also supervised by Hilary Weller.  My project is CASE sponsored by the Met Office.
+
+The PhD aims to find ways of improving the accuracy of dynamical cores in the presence of orography.  So far, my research has focused on comparing terrain following (TF) and cut cell grids using a series of standard two-dimensional tests.  The results demonstrate the trade-off between the numerical accuracy of pressure gradient and advection terms.  We have submitted an article on this subject to Monthly Weather Review.
+
+This report documents the key results from our comparison of terrain following and cut cell grids and identifies some possible future directions for the project.  During our meeting on November 6th 2015, I'd love to hear your thoughts on my future work, and discuss how my research can help the Met Office.
+
+\section*{Comparison of terrain following and cut cell grids}
+We have performed a series of two-dimensional tests using a single nonhydrostatic model to enable a like-for-like comparison.  The model
+\begin{itemize}
+\item is designed in OpenFOAM CFD for unstructured grids
+\item uses an upwind-biased, explicit advection scheme
+\item has $\theta$, the Exner function of pressure, and covariant velocities as prognostic variables
+\item has a C grid horizontal staggering
+\item uses a Lorenz staggering in the vertical
+\end{itemize}
+The 2D tests use a limited-area domain and Coriolis forces are disabled.  Tests include
+\begin{enumerate}
+\item Tracer advection over orography \citep{schaer2002}
+\item Stably stratified atmosphere at rest \citep{klemp2011}
+\item Mountain waves \citep{schaer2002}
+\item A newly-formulated test of the advection of a stratified thermal profile in a prescribed, terrain-following velocity field
+\end{enumerate}
+
+\subsection*{Tracer advection over orography}
+We performed linear advection experiments using the upwind-biased advection scheme.  A tracer blob was advected in two different velocity fields:
+\begin{itemize}
+\item Uniform, horizontal flow
+\item Terrain-following, non-divergent flow
+\end{itemize}
+With horizontal flow, accuracy was greatest on the cut cell grid.  With terrain-following flow, accuracy was greatest on the highly non-orthogonal, terrain following grid.  Thus we conclude that accuracy is primarily dependent upon alignment of the flow with the grid, rather than grid distortions.
+
+\subsection*{Stably stratified atmosphere at rest}
+A mountain is submerged in a stably stratified atmosphere that is initially at rest.  Numerical errors in calculating the pressure gradient give rise to spurious circulation.  Over orography, metric terms are non-zero and have been documented as a source of error in calculating horizontal pressure gradients \citep{mahrer1984,steppeler2002}.  Errors can be reduced by flattening TF layers or avoiding the metric terms by interpolating pressure onto $z$-levels.
+
+Figure~\ref{fig:resting} shows the maximum spurious vertical velocities induced by pressure gradient errors.  Errors are largest on the terrain following grid.  Accuracy is improved on the cut cell grid but, compared to an orthogonal grid with no terrain, errors are still much larger than round-off.
+
+\begin{figure}
+	\centering
+	\footnotesize
+	\input{../resting-diagnostics/w}
+	\caption{Maximum spurious vertical velocity, \(w\) (\si{\meter\per\second}), in the resting atmosphere test with results on terrain following, cut cell and regular grids.}
+	\label{fig:resting}
+\end{figure}
+
+\subsection*{Mountain waves}
+Following \citet{schaer2002}, gravity waves are induced by flow of over orography.  The test was performed at various resolutions between $\Delta z = \SI{300}{\meter}$ and $\Delta z = \SI{50}{\meter}$ on terrain following and cut cell grids.  The initial potential temperature profile is subtracted from the final field to reveal thermal anomalies.  The result on the terrain following grid at $\Delta z = \SI{50}{\meter}$ is shown in figure~\ref{fig:gw-theta}.
+
+\begin{figure}
+	\centering
+	\caption{\TODO{}}
+	\label{fig:gw-theta}
+\end{figure}
+
+\bibliographystyle{ametsoc2014}
+\bibliography{references}
+
+\end{document}
